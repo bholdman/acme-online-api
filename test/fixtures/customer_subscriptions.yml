@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_subscription_id: 
+  customer: one
+  subscription: one
+  is_active: false
+  renews_on: 2020-10-12 11:26:25
+
+two:
+  customer_subscription_id: 
+  customer: two
+  subscription: two
+  is_active: false
+  renews_on: 2020-10-12 11:26:25
