@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  payment_method_id: 
+  customer: one
+  payment_last_4: 1
+  payment_expires_at: 2020-10-12 11:37:25
+
+two:
+  payment_method_id: 
+  customer: two
+  payment_last_4: 1
+  payment_expires_at: 2020-10-12 11:37:25
