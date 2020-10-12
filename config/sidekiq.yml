@@ -1,0 +1,4 @@
+:schedule:
+  subscription_renewals:
+    cron: '0 0 * * * *'   # Runs at midnight every day
+    class: SubscriptionRenewalWorker

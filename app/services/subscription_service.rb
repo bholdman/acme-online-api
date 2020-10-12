@@ -1,6 +1,6 @@
 class SubscriptionService
 
-  def initialize(customer, subscription, payment = nil)
+  def initialize(customer= nil, subscription= nil, payment = nil)
     @customer = customer 
     @subscription = subscription
     @payment = payment
@@ -34,8 +34,17 @@ class SubscriptionService
     charge_result
   end
 
-  def renew_customer_subscription
+  def renew_customer_subscription(customer_id, subscription_id, payment_method_id)
+    #Renew the subscription using the infromation passed in and the existing token for the payment method
+    customer = Customer.find_by(id: customer_id)
+    @subscription = Subscription.find_by(id: subscription_id)
+    @payment_method = PaymentMethod.find_by(id: payment_method_id)
 
+    charge_result = charge_for_renewal
+    # TODO handle notifying customer if charge fails and return
+
+    # If the charge was successfule set the subscription back to active
+    @subscription.update(is_active: true)
   end
 
   private 
@@ -48,6 +57,18 @@ class SubscriptionService
       "expiration_month": @payment[:expiration_month],
       "expiration_year": @payment[:expiration_year],
       "zip_code": @payment[:zip_code]
+    }
+    
+    res = JSON.parse RestClient.post("#{ENV['PAYMENT_API_URL']}purchase", body, authorization: "Token token=#{ENV['PAYMENT_API_KEY']}", content_type: 'json', accept: 'json')
+  rescue RestClient::ExceptionWithResponse => e
+    error = JSON.parse e.response
+    {"token"=>nil, "success"=>false, "error_message"=>lookup_payment_error(error["error_code"])}
+  end
+
+  def charge_for_renewal
+    body= {
+      "amount": @subscription.subscription_price,
+      "token": @payment_method.payment_token
     }
     
     res = JSON.parse RestClient.post("#{ENV['PAYMENT_API_URL']}purchase", body, authorization: "Token token=#{ENV['PAYMENT_API_KEY']}", content_type: 'json', accept: 'json')

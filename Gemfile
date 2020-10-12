@@ -25,14 +25,18 @@ gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# A sophisticated and secure hash algorithm designed by The OpenBSD project for hashing passwords
 gem 'bcrypt', '~> 3.1', '>= 3.1.16'
+# A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
 gem 'jwt', '~> 2.2', '>= 2.2.2'
-
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '~> 1.1', '>= 1.1.1'
-
 # A simple HTTP and REST client for Ruby.
 gem 'rest-client', '~> 2.1'
+# Simple, efficient background processing for Ruby.
+gem 'sidekiq', '~> 6.1', '>= 6.1.2'
+# Light weight job scheduling extension for Sidekiq that adds support for queueing jobs in a recurring way.
+gem 'sidekiq-scheduler', '~> 3.0', '>= 3.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
