@@ -3,7 +3,6 @@ class CreatePaymentMethods < ActiveRecord::Migration[6.0]
     create_table :payment_methods do |t|
       t.string :payment_method_id
       t.references :customer, null: false, foreign_key: true
-      t.integer :payment_last_4
       t.datetime :payment_expires_at
 
       t.timestamps

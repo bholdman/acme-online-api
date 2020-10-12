@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     post '/auth/login', to: 'authentication#login'
     post '/auth/create', to: 'authentication#create'
     post '/customer/test', to: 'customers#test'
+    get '/subscriptions', to: 'subscriptions#index'
+    post '/subscriptions/subscribe', to: 'subscriptions#subscribe'
   end
 
   # Handle any routes that don't exist and return a not found

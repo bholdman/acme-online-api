@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_164346) do
+ActiveRecord::Schema.define(version: 2020_10_12_194554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,10 @@ ActiveRecord::Schema.define(version: 2020_10_12_164346) do
     t.datetime "renews_on"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "payment_method_id"
     t.index ["customer_id"], name: "index_customer_subscriptions_on_customer_id"
     t.index ["customer_subscription_id"], name: "index_customer_subscriptions_on_customer_subscription_id", unique: true
+    t.index ["payment_method_id"], name: "index_customer_subscriptions_on_payment_method_id"
     t.index ["subscription_id"], name: "index_customer_subscriptions_on_subscription_id"
   end
 
@@ -46,11 +48,11 @@ ActiveRecord::Schema.define(version: 2020_10_12_164346) do
   create_table "payment_methods", force: :cascade do |t|
     t.string "payment_method_id"
     t.bigint "customer_id", null: false
-    t.integer "payment_last_4"
     t.datetime "payment_expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "payment_zip_code"
+    t.string "payment_token"
     t.index ["customer_id"], name: "index_payment_methods_on_customer_id"
     t.index ["payment_method_id"], name: "index_payment_methods_on_payment_method_id", unique: true
   end
@@ -75,6 +77,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_164346) do
   end
 
   add_foreign_key "customer_subscriptions", "customers"
+  add_foreign_key "customer_subscriptions", "payment_methods"
   add_foreign_key "customer_subscriptions", "subscriptions"
   add_foreign_key "payment_methods", "customers"
 end
