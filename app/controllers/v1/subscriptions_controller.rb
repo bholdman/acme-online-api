@@ -12,9 +12,9 @@ class V1::SubscriptionsController < ApplicationController
     # Try and find the customer so we don't create a new one if we don't need to
     customer = Customer.find_by(email: params[:email])
     customer = CustomerService.new().create_customer(customer_params) if customer.blank?
-
+    
     # If we couldn't create the customer for some reason return an error
-    render json: {error: 'Customer not created'} and return if customer.blank?
+    render json: {error: 'Customer not created'}, status: :unprocessable_entity and return if customer.id.blank?
 
     # Check to see if we were sent a valid subscription
     subscription = Subscription.find_by(subscription_id: subscription_params[:subscription_id])
